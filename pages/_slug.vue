@@ -1,15 +1,7 @@
 <template>
-  <div>
-    <!-- render data of the person -->
-    <h1 v-if="person">{{ person.fields.name }}</h1>
-    <!-- render blog posts -->
-    <ul>
-      <li v-for="(post, i) in posts" :key="i">
-        <nuxt-link :to="`/${post.fields.slug}`">
-          {{ post.fields.title }}
-        </nuxt-link>
-      </li>
-    </ul>
+  <div v-if="post">
+    <h1>{{ post.fields.title }}</h1>
+    <p>{{ post.fields.body }}</p>
   </div>
 </template>
 
@@ -21,13 +13,12 @@ const client = createClient()
 export default {
   data() {
     return {
-      person: null,
-      posts: []
+      post: null
     }
   },
-  // `env` is available in the context object
-  asyncData ({env}) {
-    console.log("okok")
+  `env` is available in the context object
+  asyncData ({env, params}) {
+    console.log(params.slug)
     return Promise.all([
       // fetch the owner of the blog
       // client.getEntries({
@@ -36,13 +27,18 @@ export default {
       // fetch all blog posts sorted by creation date
       client.getEntries({
         'content_type': env.CTF_BLOG_POST_TYPE_ID,
+        'fields.slug': params.slug,
         order: '-sys.createdAt'
       })
-    ]).then(([posts]) => {
-      console.log(posts.items[0])
+    ]).then(([entries]) => {
+      // return data that should be available
+      // in the template
+      // console.log(entries)
+      console.log(entries.items)
+
       return {
         // person: entries.items[0],
-        posts: posts.items
+        post: entries.items[0]
       }
     }).catch(console.error)
   }

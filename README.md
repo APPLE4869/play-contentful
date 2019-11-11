@@ -1,6 +1,16 @@
-# c
+# How To Use Contentful?
+## Prerequired
+If you want to use contentful via cli, you should install bellow package.
+https://www.npmjs.com/package/contentful-cli
 
-> Nuxt.js project
+## Document
+Integrate Contentful with Nuxt.js
+https://www.contentful.com/developers/docs/javascript/tutorials/integrate-contentful-with-vue-and-nuxt/
+
+## Used Commands
+```
+contentful space seed --template blog
+```
 
 ## Build Setup
 
